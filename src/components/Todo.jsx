@@ -7,6 +7,7 @@ function Todo() {
   const [editIndex, setEditIndex] = useState(null);
   const [editText, setEditText] = useState("");
   const [filter, setFilter] = useState("all");
+  const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
     const saved = localStorage.getItem("myTasks");
@@ -77,9 +78,17 @@ function Todo() {
     setTaskList(newList);
   };
 
+  const toggleMode = () => {
+    document.body.classList.toggle("dark");
+    setDarkMode(!darkMode);
+  }
+
   return (
     <div className="todo-container">
       <h1>My To-Do List</h1>
+      <button className="toggle-button" onClick={toggleMode} >
+        {darkMode ? "☀️ Light" : "🌙 Dark"}
+      </button>
       <div className="inputs">
         <input
           value={tasks}
