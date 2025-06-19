@@ -265,11 +265,11 @@ body.dark {
       align-items: flex-start;
     }
     .task-actions {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-top: 8px;
-    }
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
   }
   
   
