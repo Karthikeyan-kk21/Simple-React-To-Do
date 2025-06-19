@@ -7,7 +7,6 @@ function Todo() {
   const [editIndex, setEditIndex] = useState(null);
   const [editText, setEditText] = useState("");
   const [filter, setFilter] = useState("all");
-  const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
     const saved = localStorage.getItem("myTasks");
@@ -18,7 +17,6 @@ function Todo() {
 
   useEffect(() => {
     localStorage.setItem("myTasks", JSON.stringify(taskList));
-    console.log("saved:", taskList);
   }, [taskList]);
 
   const addTask = () => {
@@ -34,9 +32,9 @@ function Todo() {
     setTaskList(updatedList);
   };
 
-  const toggleCompleted = (indextotoggle) => {
+  const toggleCompleted = (indexToToggle) => {
     const updated = taskList.map((task, index) =>
-      index === indextotoggle ? { ...task, completed: !task.completed } : task
+      index === indexToToggle ? { ...task, completed: !task.completed } : task
     );
     setTaskList(updated);
   };
@@ -63,7 +61,6 @@ function Todo() {
 
   const moveUp = (index) => {
     if (index === 0) return;
-
     const newList = [...taskList];
     const temp = newList[index - 1];
     newList[index - 1] = newList[index];
@@ -73,23 +70,15 @@ function Todo() {
 
   const moveDown = (index) => {
     if (index === taskList.length - 1) return;
-
     const newList = [...taskList];
     const temp = newList[index + 1];
     newList[index + 1] = newList[index];
     newList[index] = temp;
     setTaskList(newList);
   };
-  const toggleDarkMode = () => {
-    document.body.classList.toggle("dark");
-    setDarkMode(!darkMode);
-  };
 
   return (
     <div className="todo-container">
-      <button className="toggle-button" onClick={toggleDarkMode}>
-        {darkMode ? "☀️ Light" : "🌙 Dark"}{" "}
-      </button>
       <h1>My To-Do List</h1>
       <div className="inputs">
         <input
@@ -109,6 +98,7 @@ function Todo() {
           Clear All
         </button>
       </div>
+
       <div className="filters">
         <button
           onClick={() => setFilter("all")}
@@ -129,6 +119,7 @@ function Todo() {
           Pending
         </button>
       </div>
+
       <ul className="task-list">
         {filtertask().map((task, index) => (
           <li key={index}>
@@ -144,43 +135,50 @@ function Todo() {
                   onChange={(e) => setEditText(e.target.value)}
                   placeholder="Edit task"
                 />
-                <button className="update-button" onClick={updatedTask}>
-                  ✅
-                </button>
+                <div className="task-actions">
+                  <button className="update-button" onClick={updatedTask}>
+                    ✅
+                  </button>
+                </div>
               </>
             ) : (
               <>
                 <span className={task.completed ? "completed" : ""}>
-                  {task.text}{" "}
+                  {task.text}
                 </span>
-                <button
-                  className="edit-button"
-                  onClick={() => {
-                    setEditIndex(index);
-                    setEditText(task.text);
-                  }}
-                >
-                  ✏️
-                </button>
+                <div className="task-actions">
+                  <button
+                    className="edit-button"
+                    onClick={() => {
+                      setEditIndex(index);
+                      setEditText(task.text);
+                    }}
+                  >
+                    ✏️
+                  </button>
+                  <button
+                    className="delete-button"
+                    onClick={() => deleteTask(index)}
+                  >
+                    ❌
+                  </button>
+                  <button
+                    className="move-button"
+                    disabled={index === 0}
+                    onClick={() => moveUp(index)}
+                  >
+                    ⬆️
+                  </button>
+                  <button
+                    className="move-button"
+                    disabled={index === taskList.length - 1}
+                    onClick={() => moveDown(index)}
+                  >
+                    ⬇️
+                  </button>
+                </div>
               </>
             )}
-            <button className="delete-button" onClick={() => deleteTask(index)}>
-              ❌
-            </button>
-            <button
-              className="move-button"
-              disabled={index === 0}
-              onClick={() => moveUp(index)}
-            >
-              ⬆️
-            </button>
-            <button
-              className="move-button"
-              disabled={index === taskList.length - 1}
-              onClick={() => moveDown(index)}
-            >
-              ⬇️
-            </button>
           </li>
         ))}
       </ul>

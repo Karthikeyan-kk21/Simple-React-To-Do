@@ -218,4 +218,58 @@ body.dark {
   body.dark .clear-button:hover {
     background-color: #b30000;
   }
+
+  @media (max-width: 600px) {
+    .todo-container {
+      width: 90%;
+      padding: 10px 20px;
+    }
+  
+    .inputs {
+      flex-direction: row;
+      flex-wrap: wrap; /* allow wrapping if space is too tight */
+      gap: 10px;
+      justify-content: center;
+    }
+  
+    .inputs input {
+      flex: 1 1 100%;
+      margin-bottom: 0;
+    }
+  
+    .add-button,
+    .clear-button {
+      flex: 1 1 auto;
+      white-space: nowrap;
+    }
+  
+    .filters {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+  
+    .filters button {
+      flex: 1 1 auto;
+      margin: 5px;
+    }
+  
+    .toggle-button {
+      font-size: 16px;
+      padding: 8px;
+      top: 15px;
+      right: 15px;
+    }
+  
+    .task-list li {
+      flex-direction:column ;
+      align-items: flex-start;
+    }
+    .task-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+  }
+  
   
